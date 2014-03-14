@@ -413,19 +413,20 @@ Then we can open and read it in the way we just demonstrated above:
 As its name implies, the ``open()`` function opens files, but it does not close
 files after reading from them. While this is not likely to have a negative
 impact on the work we will do in this chapter, it is a best practice to use the
-``open()`` function as part of a ``with`` statement, which will ensure
-that the file is automatically closed after having been read.
+``open()`` function as part of a ``with`` statement, which will ensure that the
+file is automatically closed after having been read.
 
 We can use a ``with`` statement to rewrite the above like this:
 
 .. doctest-ignore::
-    f = open('document.txt', 'rU')
-    with f:
+    with open('document.txt', 'rU') as f:
         for line in f:
             print(line.strip())
 
 By writing the code in this way we can be sure that the file is closed after we
-finish reading from it.
+finish reading from it. As you have probably guessed, the first line line,
+``with open('document.txt', 'rU') as f:`` is the same as using ``=`` to assign
+``f`` a value.
 
 Extracting Text from PDF, MSWord and other Binary Formats
 ---------------------------------------------------------
