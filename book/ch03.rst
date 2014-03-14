@@ -410,6 +410,23 @@ Then we can open and read it in the way we just demonstrated above:
     >>> path = nltk.data.find('corpora/gutenberg/melville-moby_dick.txt')
     >>> raw = open(path, 'rU').read()
 
+As its name implies, the ``open()`` function opens files, but it does not close
+files after reading from them. While this is not likely to have a negative
+impact on the work we will do in this chapter, it is a best practice to use the
+``open()`` function as part of a ``with`` statement, which will ensure
+that the file is automatically closed after having been read.
+
+We can use a ``with`` statement to rewrite the above like this:
+
+.. doctest-ignore::
+    f = open('document.txt', 'rU')
+    with f:
+        for line in f:
+            print(line.strip())
+
+By writing the code in this way we can be sure that the file is closed after we
+finish reading from it.
+
 Extracting Text from PDF, MSWord and other Binary Formats
 ---------------------------------------------------------
 
@@ -423,7 +440,7 @@ it is simpler to open the document with a suitable application, then save it as 
 to your local drive, and access it as described below.
 If the document is already on the web, you can enter its URL in Google's search box.
 The search result often includes a link to an |HTML| version of the document,
-which you can save as text.  
+which you can save as text.
 
 Capturing User Input
 --------------------
@@ -954,7 +971,8 @@ file using ``f = codecs.open(path, 'w', encoding='utf-8')``.
 Text read from the file object ``f`` will be returned in Unicode.
 Let's inspect the contents of the file:
 
-    >>> for line in f:
+    >>> with f:
+    ...    for line in f:
     ...    line = line.strip()
     ...    print(line)
     Pruska Biblioteka Państwowa. Jej dawne zbiory znane pod nazwą
@@ -970,7 +988,8 @@ then we can convert all non-ASCII characters into their two-digit ``\x``\ *XX*
 and four-digit ``\u``\ *XXXX* representations:
 
     >>> f = codecs.open(path, encoding='latin2')
-    >>> for line in f:
+    >>> with f:
+    ...     for line in f:
     ...     line = line.strip()
     ...     print(line.encode('unicode_escape'))
     b'Pruska Biblioteka Pa\\u0144stwowa. Jej dawne zbiory znane pod nazw\\u0105'
