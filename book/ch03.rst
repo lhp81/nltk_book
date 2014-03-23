@@ -988,8 +988,7 @@ to see the underlying numerical values (or "codepoints") of the characters,
 then we can convert all non-ASCII characters into their two-digit ``\x``\ *XX*
 and four-digit ``\u``\ *XXXX* representations:
 
-    >>> f = codecs.open(path, encoding='latin2')
-    >>> with f:
+    >>> with f as codecs.open(path, encoding='latin2'):
     ...     for line in f:
     ...     line = line.strip()
     ...     print(line.encode('unicode_escape'))
